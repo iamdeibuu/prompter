@@ -1,0 +1,99 @@
+<body>
+	<div id="prompt_container" style="height: 100%; overflow: auto; padding: 0px 2rem;">
+		<p id="text_prompt" class="center center_text prompt_text unselectable"></p>
+	</div>
+</body>
+
+
+
+<script type="text/javascript">
+	const PROMPT_DATA_KEY = "prompt_data"
+
+	var text_to_present=localStorage.getItem(PROMPT_DATA_KEY);
+
+	text_to_present = text_to_present.replace(/(?:\r\n|\r|\n)/g, '<br>');
+	document.getElementById("text_prompt").innerHTML = text_to_present;
+
+	document.addEventListener('DOMContentLoaded', function() {
+	    const ele = document.getElementById('prompt_container');
+
+	    let pos = { top: 0, left: 0, x: 0, y: 0 };
+
+	    const mouseDownHandler = function(e) {
+	        ele.style.userSelect = 'none';
+
+	        pos = {
+	            left: ele.scrollLeft,
+	            top: ele.scrollTop,
+	            // Get the current mouse position
+	            x: e.clientX,
+	            y: e.clientY,
+	        };
+
+	        document.addEventListener('mousemove', mouseMoveHandler);
+	        document.addEventListener('mouseup', mouseUpHandler);
+	    };
+
+	    const mouseMoveHandler = function(e) {
+	        // How far the mouse has been moved
+	        const dx = e.clientX - pos.x;
+	        const dy = e.clientY - pos.y;
+
+	        // Scroll the element
+	        ele.scrollTop = pos.top - dy;
+	        ele.scrollLeft = pos.left - dx;
+	    };
+
+	    const mouseUpHandler = function() {
+	        ele.style.removeProperty('user-select');
+
+	        document.removeEventListener('mousemove', mouseMoveHandler);
+	        document.removeEventListener('mouseup', mouseUpHandler);
+	    };
+
+	    // Attach the handler
+	    ele.addEventListener('mousedown', mouseDownHandler);
+	});
+
+</script>
+
+
+
+
+<style type="text/css">
+	#prompt_container {
+		cursor: url(images/dot.cur), auto;
+	}
+
+	.center {
+		margin: auto;
+		padding: 10px;
+		width: 500px;
+	}
+
+	.center_text {
+		margin: auto;
+		padding: 10px;
+		text-align: center;
+	}
+
+	body {
+		background-image: url("images/bg.png");
+		background-position: center;
+		background-size: cover;
+		position: absolute;
+		top:0px;
+		left:0px;
+		width: 100%;
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: hidden;
+	}
+
+	.prompt_text {
+		font-size: 100px;
+		font-family: Constantia, sans-serif;
+		font-weight: bold;
+		width: 90%;
+	}
+</style>

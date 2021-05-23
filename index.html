@@ -1,0 +1,70 @@
+<body onload="on_load()">
+	<div id="input_container" class="center" style="width: 80%;">
+		<p id="input_title">Enter text to present:</p>
+		<textarea id="text_input" class="center"></textarea>
+		<br/>
+		<br/>
+		<br/>
+		<button onclick="on_click_present()" class="center">Present</button>
+	</div>
+</body>
+
+
+<script type="text/javascript">
+	const PROMPT_DATA_KEY = "prompt_data"
+
+	window.onload = (event) => {
+	  	var stored_data = localStorage.getItem(PROMPT_DATA_KEY);
+		document.getElementById("text_input").value = stored_data;
+	};
+
+	function on_click_present() {
+		var text_to_present = document.getElementById("text_input").value;
+		localStorage.setItem(PROMPT_DATA_KEY, text_to_present);
+		window.location.href="prompt.html";
+	}	
+</script>
+
+
+
+<style type="text/css">
+	#text_input {
+		height: 80%;
+		width: 100%;
+	}
+
+	.center {
+		margin: auto;
+		padding: 10px;
+		width: 500px;
+	}
+
+	.center_text {
+		margin: auto;
+		padding: 10px;
+		text-align: center;
+	}
+
+	body {
+		background-image: url("images/bg.png");
+		background-position: center;
+		background-size: cover;
+		position: absolute;
+		top:0px;
+		left:0px;
+		width: 100%;
+		height: 90%;
+		overflow-x: hidden;
+	}
+
+	#input_title {
+		font-size: 20px;
+		font-family: Constantia, sans-serif;
+		font-weight: bold;
+	}
+
+	#text_input {
+		font-size: 20px;
+		font-family: Constantia, sans-serif;
+	}
+</style>
