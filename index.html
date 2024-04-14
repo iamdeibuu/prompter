@@ -12,6 +12,120 @@
 	</script>
 	<title>Ryben Prompter</title>
 	<h1 id="ryben_prompter">Ryben Prompter</h1>
+
+	<style type="text/css">
+		#ryben_prompter {
+			position: absolute;
+			top: 10px;
+			left: 20px;
+			font-family: 'Georgia', serif;
+			color: #444;
+			font-size: 18px;
+			letter-spacing: 0.05em;
+			opacity: 0.5;
+			text-shadow: 2px 2px 14px rgba(209, 209, 209, 0.5);
+		}
+
+		body {
+			font-family: 'Helvetica Neue', Arial, sans-serif;
+			background: linear-gradient(to right,
+					#4abfff 0%,
+					#b4e5fe 20%,
+					#eef9ff 40%,
+					#ffffff 50%,
+					#eef9ff 60%,
+					#b4e5fe 80%,
+					#4abfff 100%);
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			padding: 0;
+		}
+
+		#input_container {
+			background: white;
+			padding: 20px;
+			box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.3);
+			border-radius: 8px;
+			width: 80%;
+			max-width: 600px;
+			transition: height 0.1s ease-in-out;
+		}
+
+		#input_title {
+			font-size: 24px;
+			font-weight: bold;
+			color: #333;
+			margin-bottom: 15px;
+			text-align: center;
+		}
+
+		#text_input {
+			width: 100%;
+			height: 50%;
+			border: 2px solid #ccc;
+			border-radius: 4px;
+			padding: 10px;
+			font-size: 16px;
+			margin-bottom: 20px;
+			resize: vertical;
+			min-height: 25%;
+			max-height: 75%;
+			/* Limit the resizing to not exceed the container's max height */
+		}
+
+		.button_container {
+			display: flex;
+			justify-content: center;
+		}
+
+		button {
+			padding: 15px 25px;
+			margin: 0 10px;
+			border-radius: 8px;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+			font-family: 'Arial', sans-serif;
+			font-size: 18px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+		}
+
+		.primary {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 45px;
+		}
+
+		.primary:hover {
+			background-color: #45a049;
+			transform: scale(1.03);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		.secondary {
+			background-color: #f3f3f3;
+			color: #333;
+			border: 1px solid #ccc;
+		}
+
+		.secondary:hover {
+			background-color: #e1e1e1;
+			transform: scale(1.03);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+		}
+
+		#feedback {
+			text-align: center;
+			color: green;
+			opacity: 0;
+			height: 0;
+			overflow: hidden;
+			transition: opacity 0.1s, height 0.1s ease-in-out;
+		}
+	</style>
 </head>
 
 <body onload="on_load()">
@@ -70,117 +184,3 @@
 	}
 
 </script>
-
-<style type="text/css">
-	#ryben_prompter {
-		position: absolute;
-		top: 10px;
-		left: 20px;
-		font-family: 'Georgia', serif;
-		color: #444;
-		font-size: 18px;
-		letter-spacing: 0.05em;
-		opacity: 0.8;
-		text-shadow: 2px 2px 14px rgba(209, 209, 209, 0.5);
-	}
-
-	body {
-		font-family: 'Helvetica Neue', Arial, sans-serif;
-		background: linear-gradient(to right,
-				#4abfff 0%,
-				#b4e5fe 20%,
-				#eef9ff 40%,
-				#ffffff 50%,
-				#eef9ff 60%,
-				#b4e5fe 80%,
-				#4abfff 100%);
-		height: 100vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin: 0;
-		padding: 0;
-	}
-
-	#input_container {
-		background: white;
-		padding: 20px;
-		box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.3);
-		border-radius: 8px;
-		width: 80%;
-		max-width: 600px;
-		transition: height 0.1s ease-in-out;
-	}
-
-	#input_title {
-		font-size: 24px;
-		font-weight: bold;
-		color: #333;
-		margin-bottom: 15px;
-		text-align: center;
-	}
-
-	#text_input {
-		width: 100%;
-		height: 50%;
-		border: 2px solid #ccc;
-		border-radius: 4px;
-		padding: 10px;
-		font-size: 16px;
-		margin-bottom: 20px;
-		resize: vertical;
-		min-height: 25%;
-		max-height: 75%;
-		/* Limit the resizing to not exceed the container's max height */
-	}
-
-	.button_container {
-		display: flex;
-		justify-content: center;
-	}
-
-	button {
-		padding: 15px 25px;
-		margin: 0 10px;
-		border-radius: 8px;
-		cursor: pointer;
-		transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-		font-family: 'Arial', sans-serif;
-		font-size: 18px;
-		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-	}
-
-	.primary {
-		background-color: #4CAF50;
-		color: white;
-		border: none;
-		padding: 10px 35px;
-	}
-
-	.primary:hover {
-		background-color: #45a049;
-		transform: scale(1.03);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-	}
-
-	.secondary {
-		background-color: #f3f3f3;
-		color: #333;
-		border: 1px solid #ccc;
-	}
-
-	.secondary:hover {
-		background-color: #e1e1e1;
-		transform: scale(1.03);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-	}
-
-	#feedback {
-		text-align: center;
-		color: green;
-		opacity: 0;
-		height: 0;
-		overflow: hidden;
-		transition: opacity 0.1s, height 0.1s ease-in-out;
-	}
-</style>
