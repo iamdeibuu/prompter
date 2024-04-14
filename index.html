@@ -1,3 +1,18 @@
+<html>
+
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-N68M3RKVB3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-N68M3RKVB3');
+	</script>
+	<title>Ryben Prompter</title>
+</head>
+
 <body onload="on_load()">
 	<div id="input_container">
 		<p id="input_title">Enter Text to Present:</p>
@@ -8,9 +23,10 @@
 		</div>
 		<div id="feedback" style="margin-top: 15px; text-align: center; color: green; display: block;">Link copied to
 			clipboard</div>
-
 	</div>
 </body>
+
+</html>
 
 <script src="TextUrlEncoder.js"></script>
 
@@ -71,7 +87,7 @@
 	#input_container {
 		background: white;
 		padding: 20px;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		box-shadow: 2px 4px 8px 2px rgba(0, 0, 0, 0.3);
 		border-radius: 8px;
 		width: 80%;
 		max-width: 600px;
@@ -106,22 +122,27 @@
 	}
 
 	button {
-		padding: 10px 20px;
+		padding: 15px 25px;
 		margin: 0 10px;
-		border-radius: 5px;
+		border-radius: 8px;
 		cursor: pointer;
-		transition: background-color 0.3s, transform 0.2s;
+		transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+		font-family: 'Arial', sans-serif;
+		font-size: 18px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	}
 
 	.primary {
 		background-color: #4CAF50;
 		color: white;
 		border: none;
+		padding: 10px 35px;
 	}
 
 	.primary:hover {
 		background-color: #45a049;
-		transform: scale(1.05);
+		transform: scale(1.03);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	}
 
 	.secondary {
@@ -132,7 +153,8 @@
 
 	.secondary:hover {
 		background-color: #e1e1e1;
-		transform: scale(1.05);
+		transform: scale(1.03);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
 	}
 
 	#feedback {
