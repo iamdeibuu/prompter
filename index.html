@@ -11,15 +11,16 @@
 		gtag('config', 'G-N68M3RKVB3');
 	</script>
 	<title>Ryben Prompter</title>
+	<h1 id="ryben_prompter">Ryben Prompter</h1>
 </head>
 
 <body onload="on_load()">
 	<div id="input_container">
-		<p id="input_title">Enter Text to Present:</p>
+		<p id="input_title">Enter Text to Prompt:</p>
 		<textarea id="text_input"></textarea>
 		<div class="button_container">
 			<button class="secondary" onclick="generateLink()">Copy Link</button>
-			<button class="primary" onclick="on_click_present()">Present</button>
+			<button class="primary" onclick="on_click_present()">Prompt</button>
 		</div>
 		<div id="feedback" style="margin-top: 15px; text-align: center; color: green; display: block;">Link copied to
 			clipboard</div>
@@ -71,6 +72,18 @@
 </script>
 
 <style type="text/css">
+	#ryben_prompter {
+		position: absolute;
+		top: 10px;
+		left: 20px;
+		font-family: 'Georgia', serif;
+		color: #444;
+		font-size: 18px;
+		letter-spacing: 0.05em;
+		opacity: 0.8;
+		text-shadow: 2px 2px 14px rgba(209, 209, 209, 0.5);
+	}
+
 	body {
 		font-family: 'Helvetica Neue', Arial, sans-serif;
 		background: linear-gradient(to right,
