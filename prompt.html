@@ -2,26 +2,49 @@
 	<div id="prompt_container" style="height: 100%; overflow: auto; padding: 0px 2rem;">
 		<p id="text_prompt" class="center center_text prompt_text unselectable"></p>
 	</div>
+	<button id="backButton" style="position: absolute; top: 0; left: 0;" aria-label="Go back">←</button>
+
+	<script>
+		document.getElementById('backButton').addEventListener('click', function () {
+			window.location.href = 'index.html';
+		});
+	</script>
 </body>
+
+
 
 <script src="TextUrlEncoder.js"></script>
 
 <script type="text/javascript">
+	const PROMPT_DATA_KEY = "prompt_data"
+
 	document.addEventListener('DOMContentLoaded', function () {
 		const urlParams = new URLSearchParams(window.location.search);
 		const textFromUrl = urlParams.get('text'); // Get 'text' parameter from URL
 
+		const text_prompt = document.getElementById("text_prompt")
+		let text_to_display = ""
+
 		if (textFromUrl) {
-			const decoded_text = TextUrlEncoder.urlDecode(textFromUrl);
-			const formattedText = decoded_text.replace(/(?:\r\n|\r|\n|\+|\%20)/g, '<br>'); // Replace line breaks and URL encoding for spaces
-			document.getElementById("text_prompt").innerHTML = decodeURIComponent(formattedText);
+			let decoded_text = TextUrlEncoder.urlDecode(textFromUrl);
+			localStorage.setItem(PROMPT_DATA_KEY, decoded_text);
+
+			let formattedText = decoded_text.replace(/(?:\r\n|\r|\n|\+|\%20)/g, '<br>'); // Replace line breaks and URL encoding for spaces
+			let decodedUriComponent = decodeURIComponent(formattedText)
+
+			text_to_display = decodedUriComponent;
 		} else {
-			const fallbackText = localStorage.getItem('prompt_data'); // Fallback to local storage if no URL parameter
+			const fallbackText = localStorage.getItem(PROMPT_DATA_KEY); // Fallback to local storage if no URL parameter
 			if (fallbackText) {
 				const formattedText = fallbackText.replace(/(?:\r\n|\r|\n)/g, '<br>');
-				document.getElementById("text_prompt").innerHTML = formattedText;
+				text_to_display = formattedText;
 			}
 		}
+
+		// Add a bit of padding to the text
+		text_to_display = "<br><br><br>" + text_to_display + "<br><br><br><br><br><br><br><br><br>"
+		text_prompt.innerHTML = text_to_display
+
 
 		const ele = document.getElementById('prompt_container');
 		let pos = { top: 0, left: 0, x: 0, y: 0 };
@@ -61,6 +84,29 @@
 <style type="text/css">
 	#prompt_container {
 		cursor: url(images/dot.cur), auto;
+		position: relative;
+		height: 100%;
+		overflow: auto;
+		padding: 0 2rem;
+	}
+
+	#backButton {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		border: none;
+		background-color: transparent;
+		color: black;
+		font-size: 1.5em;
+		padding: 15px;
+		cursor: pointer;
+		opacity: 0;
+		transition: opacity 0.5s ease-out;
+	}
+
+	#backButton:hover {
+		opacity: 0.5;
+		transition: opacity 0.1s ease-in;
 	}
 
 	.center {
