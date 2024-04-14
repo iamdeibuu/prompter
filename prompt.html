@@ -4,13 +4,16 @@
 	</div>
 </body>
 
+<script src="TextUrlEncoder.js"></script>
+
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function () {
 		const urlParams = new URLSearchParams(window.location.search);
-		const text = urlParams.get('text'); // Get 'text' parameter from URL
+		const textFromUrl = urlParams.get('text'); // Get 'text' parameter from URL
 
-		if (text) {
-			const formattedText = text.replace(/(?:\r\n|\r|\n|\+|\%20)/g, '<br>'); // Replace line breaks and URL encoding for spaces
+		if (textFromUrl) {
+			const decoded_text = TextUrlEncoder.urlDecode(textFromUrl);
+			const formattedText = decoded_text.replace(/(?:\r\n|\r|\n|\+|\%20)/g, '<br>'); // Replace line breaks and URL encoding for spaces
 			document.getElementById("text_prompt").innerHTML = decodeURIComponent(formattedText);
 		} else {
 			const fallbackText = localStorage.getItem('prompt_data'); // Fallback to local storage if no URL parameter

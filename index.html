@@ -3,7 +3,7 @@
 		<p id="input_title">Enter Text to Present:</p>
 		<textarea id="text_input"></textarea>
 		<div class="button_container">
-			<button class="secondary" onclick="generateLink()" style="display:none;">Copy Link</button>
+			<button class="secondary" onclick="generateLink()">Copy Link</button>
 			<button class="primary" onclick="on_click_present()">Present</button>
 		</div>
 		<div id="feedback" style="margin-top: 15px; text-align: center; color: green; display: block;">Link copied to
@@ -11,6 +11,8 @@
 
 	</div>
 </body>
+
+<script src="TextUrlEncoder.js"></script>
 
 <script type="text/javascript">
 	const PROMPT_DATA_KEY = "prompt_data"
@@ -28,7 +30,10 @@
 
 	function generateLink() {
 		var text_to_present = document.getElementById("text_input").value;
-		navigator.clipboard.writeText(text_to_present).then(() => {
+		const compressed_text = TextUrlEncoder.urlEncode(text_to_present);
+		const relative_url = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/prompt.html') + "?text=" + compressed_text;
+
+		navigator.clipboard.writeText(relative_url).then(() => {
 			const feedback = document.getElementById("feedback");
 			feedback.style.opacity = "1";
 			feedback.style.height = "20px"; // Adjust as needed for your design
@@ -36,12 +41,12 @@
 			setTimeout(() => {
 				feedback.style.opacity = "0";
 				feedback.style.height = "0";
-
 			}, 2000);
 		}, (err) => {
 			console.error('Could not copy text: ', err);
 		});
 	}
+
 </script>
 
 <style type="text/css">
