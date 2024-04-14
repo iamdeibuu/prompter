@@ -41,13 +41,18 @@
 	function on_click_present() {
 		var text_to_present = document.getElementById("text_input").value;
 		localStorage.setItem(PROMPT_DATA_KEY, text_to_present);
-		window.location.href = "prompt.html";
+		window.location.href = "prompt.html" + formatParams(TextUrlEncoder.urlEncode(text_to_present), true)
+	}
+
+	function formatParams(paramValue) {
+		const params = new URLSearchParams();
+		params.set("text", paramValue);
+		return '?' + params.toString();
 	}
 
 	function generateLink() {
-		var text_to_present = document.getElementById("text_input").value;
-		const compressed_text = TextUrlEncoder.urlEncode(text_to_present);
-		const relative_url = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/prompt.html') + "?text=" + compressed_text;
+		let text_to_present = document.getElementById("text_input").value;
+		let relative_url = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/prompt.html') + formatParams(TextUrlEncoder.urlEncode(text_to_present))
 
 		navigator.clipboard.writeText(relative_url).then(() => {
 			const feedback = document.getElementById("feedback");
