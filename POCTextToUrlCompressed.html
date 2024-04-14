@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Text Compressor</title>
+    <script>
+        class TextCompressor {
+            static compress(input) {
+                const dictionary = {};
+                let data = (input + "").split("");
+                let out = [];
+                let currChar;
+                let phrase = data[0];
+                let code = 256;
+                for (let i = 1; i < data.length; i++) {
+                    currChar = data[i];
+                    if (dictionary[phrase + currChar] != null) {
+                        phrase += currChar;
+                    } else {
+                        out.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
+                        dictionary[phrase + currChar] = code;
+                        code++;
+                        phrase = currChar;
+                    }
+                }
+                out.push(phrase.length > 1 ? dictionary[phrase] : phrase.charCodeAt(0));
+                return out.map((code) => String.fromCharCode(code)).join('');
+            }
+
+            static decompress(input) {
+                let dictionary = {};
+                let data = (input + "").split("");
+                let currChar = data[0];
+                let oldPhrase = currChar;
+                let out = [currChar];
+                let code = 256;
+                let phrase;
+                for (let i = 1; i < data.length; i++) {
+                    let currCode = data[i].charCodeAt(0);
+                    if (currCode < 256) {
+                        phrase = data[i];
+                    } else {
+                        phrase = dictionary[currCode] ? dictionary[currCode] : (oldPhrase + currChar);
+                    }
+                    out.push(phrase);
+                    currChar = phrase.charAt(0);
+                    dictionary[code] = oldPhrase + currChar;
+                    code++;
+                    oldPhrase = phrase;
+                }
+                return out.join("");
+            }
+
+            static utf16ToBase64(text) {
+                const utf16 = encodeURIComponent(text).replace(/%([0-9A-F]{2})/g,
+                    function (match, p1) {
+                        return String.fromCharCode('0x' + p1);
+                    });
+                return btoa(utf16);
+            }
+
+            static base64ToUtf16(base64) {
+                const utf16 = atob(base64);
+                return decodeURIComponent(utf16.split('').map((c) => {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+            }
+
+            static urlEncode(text) {
+                return encodeURIComponent(this.utf16ToBase64(this.compress(text)));
+            }
+
+            static urlDecode(text) {
+                return this.decompress(this.base64ToUtf16(decodeURIComponent(text)));
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Text Compressor and Decompressor</h1>
+    <label for="inputText">Enter Text:</label>
+    <br>
+    <textarea id="inputText" style="width: 300px; height: 100px;"></textarea>
+    <br>
+    <button onclick="compressText()">Compress & Encode</button>
+    <button onclick="decompressText()">Decode & Decompress</button>
+    <p>Compressed & Encoded Output:</p> <textarea id="outputCompressed" style="width: 300px; height: 100px;"
+        readonly></textarea>
+    <p>Decompressed Output:</p> <textarea id="outputDecompressed" style="width: 300px; height: 100px;"
+        readonly></textarea>
+
+    <script>
+        function compressText() {
+            const inputText = document.getElementById("inputText").value;
+            const compressed = TextCompressor.urlEncode(inputText);
+            document.getElementById("outputCompressed").value = compressed;
+            document.getElementById("outputDecompressed").value = '';
+        }
+
+        function decompressText() {
+            const compressedText = document.getElementById("outputCompressed").value;
+            const decompressed = TextCompressor.urlDecode(compressedText);
+            document.getElementById("outputDecompressed").value = decompressed;
+        }
+    </script>
+</body>
+
+</html>

@@ -3,7 +3,7 @@
 		<p id="input_title">Enter Text to Present:</p>
 		<textarea id="text_input"></textarea>
 		<div class="button_container">
-			<!-- <button class="secondary" onclick="generateLink()">Copy Link</button> -->
+			<button class="secondary" onclick="generateLink()" style="display:none;">Copy Link</button>
 			<button class="primary" onclick="on_click_present()">Present</button>
 		</div>
 		<div id="feedback" style="margin-top: 15px; text-align: center; color: green; display: block;">Link copied to
@@ -33,24 +33,15 @@
 			feedback.style.opacity = "1";
 			feedback.style.height = "20px"; // Adjust as needed for your design
 
-			// Optional: Adjust container height if needed
-			// document.getElementById("input_container").style.height = "auto";
-
 			setTimeout(() => {
 				feedback.style.opacity = "0";
 				feedback.style.height = "0";
 
-				// Optional: Reset container height if adjusted
-				// document.getElementById("input_container").style.height = "initial";
 			}, 2000);
 		}, (err) => {
 			console.error('Could not copy text: ', err);
 		});
 	}
-
-
-
-
 </script>
 
 <style type="text/css">

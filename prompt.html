@@ -4,28 +4,30 @@
 	</div>
 </body>
 
-
-
 <script type="text/javascript">
-	const PROMPT_DATA_KEY = "prompt_data"
-
-	var text_to_present = localStorage.getItem(PROMPT_DATA_KEY);
-
-	text_to_present = text_to_present.replace(/(?:\r\n|\r|\n)/g, '<br>');
-	document.getElementById("text_prompt").innerHTML = text_to_present;
-
 	document.addEventListener('DOMContentLoaded', function () {
-		const ele = document.getElementById('prompt_container');
+		const urlParams = new URLSearchParams(window.location.search);
+		const text = urlParams.get('text'); // Get 'text' parameter from URL
 
+		if (text) {
+			const formattedText = text.replace(/(?:\r\n|\r|\n|\+|\%20)/g, '<br>'); // Replace line breaks and URL encoding for spaces
+			document.getElementById("text_prompt").innerHTML = decodeURIComponent(formattedText);
+		} else {
+			const fallbackText = localStorage.getItem('prompt_data'); // Fallback to local storage if no URL parameter
+			if (fallbackText) {
+				const formattedText = fallbackText.replace(/(?:\r\n|\r|\n)/g, '<br>');
+				document.getElementById("text_prompt").innerHTML = formattedText;
+			}
+		}
+
+		const ele = document.getElementById('prompt_container');
 		let pos = { top: 0, left: 0, x: 0, y: 0 };
 
 		const mouseDownHandler = function (e) {
 			ele.style.userSelect = 'none';
-
 			pos = {
 				left: ele.scrollLeft,
 				top: ele.scrollTop,
-				// Get the current mouse position
 				x: e.clientX,
 				y: e.clientY,
 			};
@@ -35,18 +37,15 @@
 		};
 
 		const mouseMoveHandler = function (e) {
-			// How far the mouse has been moved
 			const dx = e.clientX - pos.x;
 			const dy = e.clientY - pos.y;
 
-			// Scroll the element
 			ele.scrollTop = pos.top - dy;
 			ele.scrollLeft = pos.left - dx;
 		};
 
 		const mouseUpHandler = function () {
 			ele.style.removeProperty('user-select');
-
 			document.removeEventListener('mousemove', mouseMoveHandler);
 			document.removeEventListener('mouseup', mouseUpHandler);
 		};
@@ -54,11 +53,7 @@
 		// Attach the handler
 		ele.addEventListener('mousedown', mouseDownHandler);
 	});
-
 </script>
-
-
-
 
 <style type="text/css">
 	#prompt_container {
